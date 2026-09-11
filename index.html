@@ -183,42 +183,44 @@
       <h2>Tarifcheck anfragen</h2>
       <p class="intro">Kontaktdaten eingeben, Rechnung hochladen und absenden – ohne eine eigene E-Mail-App öffnen zu müssen.</p>
       <form id="energyForm" action="https://formsubmit.co/bernhard.janzen@outlook.de" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="_subject" value="Neue Anfrage: Strom & Gas Tarifcheck">
+        <input type="hidden" name="_subject" value="Neue Strom- & Gas-Anfrage von der Website">
         <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="https://janzen2002bernhard-create.github.io/bernhard-business/danke.html">
         <input type="text" name="_honey" style="display:none">
         <input type="hidden" name="_captcha" value="true">
+        <input type="hidden" name="email" id="replyEmail">
         <div class="form-grid">
           <div class="field">
             <label for="name">Vor- und Nachname *</label>
-            <input id="name" name="name" type="text" autocomplete="name" required>
+            <input id="name" name="Name" type="text" autocomplete="name" required>
           </div>
           <div class="field">
             <label for="email">E-Mail-Adresse *</label>
-            <input id="email" name="email" type="email" autocomplete="email" required>
+            <input id="email" name="E-Mail" type="email" autocomplete="email" required>
           </div>
           <div class="field">
             <label for="phone">Telefonnummer</label>
-            <input id="phone" name="phone" type="tel" autocomplete="tel">
+            <input id="phone" name="Telefonnummer" type="tel" autocomplete="tel">
           </div>
           <div class="field">
             <label for="verbrauch">Jahresverbrauch (optional)</label>
-            <input id="verbrauch" name="jahresverbrauch" type="text" placeholder="z. B. 3.500 kWh">
+            <input id="verbrauch" name="Jahresverbrauch" type="text" placeholder="z. B. 3.500 kWh">
           </div>
           <div class="field full">
             <label>Was möchten Sie prüfen? *</label>
             <div class="radio-row">
-              <label class="radio-pill"><input type="radio" name="tarifart" value="Strom" required> Strom</label>
-              <label class="radio-pill"><input type="radio" name="tarifart" value="Gas"> Gas</label>
-              <label class="radio-pill"><input type="radio" name="tarifart" value="Strom & Gas"> Strom & Gas</label>
+              <label class="radio-pill"><input type="radio" name="Tarif" value="Strom" required> Strom</label>
+              <label class="radio-pill"><input type="radio" name="Tarif" value="Gas"> Gas</label>
+              <label class="radio-pill"><input type="radio" name="Tarif" value="Strom & Gas"> Strom & Gas</label>
             </div>
           </div>
           <div class="field full">
             <label for="message">Nachricht (optional)</label>
-            <textarea id="message" name="nachricht" placeholder="Gibt es etwas, das ich bei der Prüfung beachten soll?"></textarea>
+            <textarea id="message" name="Nachricht" placeholder="Gibt es etwas, das ich bei der Prüfung beachten soll?"></textarea>
           </div>
           <div class="field full upload">
             <label for="rechnung">Aktuelle Rechnung hochladen *</label>
-            <input id="rechnung" name="attachment" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required>
+            <input id="rechnung" name="Rechnung" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required>
             <div class="form-note">PDF, JPG oder PNG. Gesamtgröße der hochgeladenen Dateien: maximal 10 MB.</div>
           </div>
           <div class="field full">
@@ -261,6 +263,19 @@
   </main>
 
 
+
+
+  <script>
+    const visibleEmail = document.getElementById('email');
+    const replyEmail = document.getElementById('replyEmail');
+    if (visibleEmail && replyEmail) {
+      const syncEmail = () => { replyEmail.value = visibleEmail.value; };
+      visibleEmail.addEventListener('input', syncEmail);
+      visibleEmail.addEventListener('change', syncEmail);
+      const form = document.getElementById('energyForm');
+      if (form) form.addEventListener('submit', syncEmail);
+    }
+  </script>
 
 </body>
 </html>
