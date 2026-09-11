@@ -120,7 +120,57 @@
     .error-box{display:none;margin-top:18px;border-radius:14px;padding:14px 16px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:14px}
     @media(max-width:650px){.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.form-card{padding:28px 20px}}
 
-  </style>
+  
+select{width:100%;border:1px solid var(--line);border-radius:13px;min-height:50px;padding:12px 14px;font:inherit;background:#fff;color:var(--text)}
+.optional{font-weight:500;color:var(--muted);font-size:12px}
+.section-label{margin-top:6px;padding-top:10px;border-top:1px solid var(--line)}
+.section-label strong{font-size:18px}
+.section-label span{font-size:12px;color:var(--muted)}
+.energy-panel{display:none;border:1px solid var(--line);border-radius:18px;padding:20px;background:#fafbfc}
+.energy-panel.active{display:flex}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.panel-head strong{font-size:20px}
+.panel-head span{font-size:12px;color:var(--muted);font-weight:500}
+.inner-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%}
+@media(max-width:650px){.inner-grid{grid-template-columns:1fr}.panel-head{display:block}.panel-head span{display:block;margin-top:4px}}
+
+
+.choice-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 14px}
+.choice-tabs.two{grid-template-columns:1fr 1fr}
+.choice-tabs label{position:relative;cursor:pointer}
+.choice-tabs input{position:absolute;opacity:0;pointer-events:none}
+.choice-tabs span{
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  min-height:46px;padding:10px 12px;border:1px solid var(--line);
+  border-radius:12px;background:#f4f5f7;font-weight:700;color:#3f4650;
+  transition:.18s ease;
+}
+.choice-tabs input:checked + span{
+  background:#111827;color:#fff;border-color:#111827;
+}
+.panel-label{display:block;margin-top:16px;margin-bottom:4px}
+.energy-panel{
+  display:none;border:1px solid var(--line);border-radius:18px;padding:22px;background:#fafbfc
+}
+.energy-panel.active{display:block}
+.panel-head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  margin-bottom:10px;padding-bottom:12px;border-bottom:1px solid var(--line)
+}
+.panel-head strong{font-size:22px}
+.panel-head span{font-size:12px;color:var(--muted)}
+.inner-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;margin-top:14px}
+.address-grid{margin-top:18px}
+.consumption{margin-top:18px}
+@media(max-width:650px){
+  .choice-tabs{gap:6px}
+  .choice-tabs span{font-size:13px;padding:9px 6px}
+  .inner-grid{grid-template-columns:1fr 1fr}
+  .panel-head{display:block}
+  .panel-head span{display:block;margin-top:4px}
+}
+
+</style>
 </head>
 <body>
   <main class="wrap">
@@ -179,67 +229,171 @@
     </section>
 
 
-    <section class="form-card" id="tarifcheck">
-      <h2>Tarifcheck anfragen</h2>
-      <p class="intro">Kontaktdaten eingeben, Rechnung hochladen und absenden – ohne eine eigene E-Mail-App öffnen zu müssen.</p>
-      <form id="energyForm" action="https://formsubmit.co/bernhard.janzen@outlook.de" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="_subject" value="Neue Strom- & Gas-Anfrage von der Website">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="https://janzen2002bernhard-create.github.io/bernhard-business/danke.html">
-        <input type="text" name="_honey" style="display:none">
-        <input type="hidden" name="_captcha" value="true">
-        <input type="hidden" name="email" id="replyEmail">
-        <div class="form-grid">
-          <div class="field">
-            <label for="name">Vor- und Nachname *</label>
-            <input id="name" name="Name" type="text" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <label for="email">E-Mail-Adresse *</label>
-            <input id="email" name="E-Mail" type="email" autocomplete="email" required>
-          </div>
-          <div class="field">
-            <label for="phone">Telefonnummer</label>
-            <input id="phone" name="Telefonnummer" type="tel" autocomplete="tel">
-          </div>
-          <div class="field">
-            <label for="verbrauch">Jahresverbrauch (optional)</label>
-            <input id="verbrauch" name="Jahresverbrauch" type="text" placeholder="z. B. 3.500 kWh">
-          </div>
-          <div class="field full">
-            <label>Was möchten Sie prüfen? *</label>
-            <div class="radio-row">
-              <label class="radio-pill"><input type="radio" name="Tarif" value="Strom" required> Strom</label>
-              <label class="radio-pill"><input type="radio" name="Tarif" value="Gas"> Gas</label>
-              <label class="radio-pill"><input type="radio" name="Tarif" value="Strom & Gas"> Strom & Gas</label>
-            </div>
-          </div>
-          <div class="field full">
-            <label for="message">Nachricht (optional)</label>
-            <textarea id="message" name="Nachricht" placeholder="Gibt es etwas, das ich bei der Prüfung beachten soll?"></textarea>
-          </div>
-          <div class="field full upload">
-            <label for="rechnung">Aktuelle Rechnung hochladen *</label>
-            <input id="rechnung" name="Rechnung" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required>
-            <div class="form-note">PDF, JPG oder PNG. Gesamtgröße der hochgeladenen Dateien: maximal 10 MB.</div>
-          </div>
-          <div class="field full">
-            <label class="check">
-              <input type="checkbox" required>
-              <span>Ich bin damit einverstanden, dass meine Angaben und die hochgeladene Abrechnung zur Bearbeitung meiner Anfrage über einen externen Formular-Dienst (FormSubmit) übermittelt und an Bernhard Janzen weitergeleitet werden. *</span>
-            </label>
-          </div>
-          <div class="field full">
-            <button class="submit-btn" type="submit">Tarifcheck senden</button>
-            <div class="form-note">Vertriebspartner: TELESON. Tarifverfügbarkeit und Konditionen können variieren.</div>
-          </div>
+    
+
+<section class="form-card" id="tarifcheck">
+  <h2>Tarifcheck anfragen</h2>
+  <p class="intro">
+    Laden Sie einfach Ihre aktuelle Abrechnung hoch. Zusätzliche Angaben helfen,
+    die Prüfung zu beschleunigen. Technische Angaben können Sie frei lassen,
+    wenn Sie diese nicht kennen – ich kann sie aus Ihrer Abrechnung entnehmen.
+  </p>
+
+  <form id="energyForm" action="https://formsubmit.co/bernhard.janzen@outlook.de" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_subject" value="Neue Strom-, Gas- oder Wärme-Anfrage von der Website">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_next" value="https://janzen2002bernhard-create.github.io/bernhard-business/danke.html">
+    <input type="text" name="_honey" style="display:none">
+    <input type="hidden" name="_captcha" value="true">
+    <input type="hidden" name="email" id="replyEmail">
+
+    <div class="form-grid">
+      <div class="field">
+        <label for="name">Vor- und Nachname *</label>
+        <input id="name" name="Name" type="text" autocomplete="name" required>
+      </div>
+
+      <div class="field">
+        <label for="email">E-Mail-Adresse *</label>
+        <input id="email" name="E-Mail" type="email" autocomplete="email" required>
+      </div>
+
+      <div class="field full">
+        <label for="phone">Telefonnummer *</label>
+        <input id="phone" name="Telefonnummer" type="tel" autocomplete="tel" required>
+      </div>
+
+      <div class="field full">
+        <label>Was möchten Sie prüfen? *</label>
+        <div class="choice-tabs energy-tabs">
+          <label><input type="radio" name="Energieart" value="Strom" data-energy="strom" required><span>Strom</span></label>
+          <label><input type="radio" name="Energieart" value="Gas" data-energy="gas"><span>Gas</span></label>
+          <label><input type="radio" name="Energieart" value="Wärme" data-energy="waerme"><span>Wärme</span></label>
         </div>
-      </form>
-      <div class="error-box" id="errorBox">Falls der Versand nicht funktioniert, prüfen Sie bitte Ihre Eingaben oder versuchen Sie es später erneut.</div>
-    </section>
+      </div>
 
+      <div class="field full energy-panel" id="stromPanel">
+        <div class="panel-head"><strong>Strom</strong><span>Technische Angaben nur ausfüllen, wenn bekannt</span></div>
 
-    <section class="contact">
+        <label class="panel-label">Kundentyp</label>
+        <div class="choice-tabs two">
+          <label><input type="radio" name="Strom - Kundentyp" value="Haushalt"><span>Haushalt</span></label>
+          <label><input type="radio" name="Strom - Kundentyp" value="Gewerbe"><span>Gewerbe</span></label>
+        </div>
+
+        <label class="panel-label">Zählertarif</label>
+        <div class="choice-tabs two">
+          <label><input type="radio" name="Strom - Zählertarif" value="Eintarif-Zähler"><span>Eintarif-Zähler</span></label>
+          <label><input type="radio" name="Strom - Zählertarif" value="Zweitarif-Zähler"><span>Zweitarif-Zähler</span></label>
+        </div>
+
+        <label class="panel-label">Zählerart</label>
+        <div class="choice-tabs two">
+          <label><input type="radio" name="Strom - Zählerart" value="Standard-Zähler"><span>Standard-Zähler</span></label>
+          <label><input type="radio" name="Strom - Zählerart" value="SMART-Zähler"><span>SMART-Zähler</span></label>
+        </div>
+
+        <div class="inner-grid address-grid">
+          <div class="field"><label>Postleitzahl</label><input name="Strom - Postleitzahl" type="text" inputmode="numeric" autocomplete="postal-code"></div>
+          <div class="field"><label>Ort</label><input name="Strom - Ort" type="text" autocomplete="address-level2"></div>
+          <div class="field"><label>Straße</label><input name="Strom - Straße" type="text" autocomplete="address-line1"></div>
+          <div class="field"><label>Hausnummer</label><input name="Strom - Hausnummer" type="text"></div>
+        </div>
+
+        <div class="field consumption">
+          <label>Verbrauch (kWh/Jahr)</label>
+          <input name="Strom - Verbrauch kWh/Jahr" type="number" min="0" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="field full energy-panel" id="gasPanel">
+        <div class="panel-head"><strong>Gas</strong><span>Angaben nur ausfüllen, wenn bekannt</span></div>
+
+        <label class="panel-label">Kundentyp</label>
+        <div class="choice-tabs two">
+          <label><input type="radio" name="Gas - Kundentyp" value="Haushalt"><span>Haushalt</span></label>
+          <label><input type="radio" name="Gas - Kundentyp" value="Gewerbe"><span>Gewerbe</span></label>
+        </div>
+
+        <div class="inner-grid address-grid">
+          <div class="field"><label>Postleitzahl</label><input name="Gas - Postleitzahl" type="text" inputmode="numeric" autocomplete="postal-code"></div>
+          <div class="field"><label>Ort</label><input name="Gas - Ort" type="text" autocomplete="address-level2"></div>
+          <div class="field"><label>Straße</label><input name="Gas - Straße" type="text" autocomplete="address-line1"></div>
+          <div class="field"><label>Hausnummer</label><input name="Gas - Hausnummer" type="text"></div>
+        </div>
+
+        <div class="field consumption">
+          <label>Verbrauch (kWh/Jahr)</label>
+          <input name="Gas - Verbrauch kWh/Jahr" type="number" min="0" inputmode="numeric">
+        </div>
+      </div>
+
+      <div class="field full energy-panel" id="waermePanel">
+        <div class="panel-head"><strong>Wärme</strong><span>Technische Angaben nur ausfüllen, wenn bekannt</span></div>
+
+        <label class="panel-label">Kundentyp</label>
+        <div class="choice-tabs two">
+          <label><input type="radio" name="Wärme - Kundentyp" value="Haushalt"><span>Haushalt</span></label>
+          <label><input type="radio" name="Wärme - Kundentyp" value="Gewerbe"><span>Gewerbe</span></label>
+        </div>
+
+        <label class="panel-label">Messungsart</label>
+        <div class="choice-tabs two">
+          <label><input type="radio" name="Wärme - Messungsart" value="getr. Messung"><span>getr. Messung</span></label>
+          <label><input type="radio" name="Wärme - Messungsart" value="gem. Messung"><span>gem. Messung</span></label>
+        </div>
+
+        <label class="panel-label">Zählertarif</label>
+        <div class="choice-tabs two">
+          <label><input type="radio" name="Wärme - Zählertarif" value="Eintarif-Zähler"><span>Eintarif-Zähler</span></label>
+          <label><input type="radio" name="Wärme - Zählertarif" value="Zweitarif-Zähler"><span>Zweitarif-Zähler</span></label>
+        </div>
+
+        <label class="panel-label">Zählerart</label>
+        <div class="choice-tabs two">
+          <label><input type="radio" name="Wärme - Zählerart" value="Standard-Zähler"><span>Standard-Zähler</span></label>
+          <label><input type="radio" name="Wärme - Zählerart" value="SMART-Zähler"><span>SMART-Zähler</span></label>
+        </div>
+
+        <div class="inner-grid address-grid">
+          <div class="field"><label>Postleitzahl</label><input name="Wärme - Postleitzahl" type="text" inputmode="numeric" autocomplete="postal-code"></div>
+          <div class="field"><label>Ort</label><input name="Wärme - Ort" type="text" autocomplete="address-level2"></div>
+          <div class="field"><label>Straße</label><input name="Wärme - Straße" type="text" autocomplete="address-line1"></div>
+          <div class="field"><label>Hausnummer</label><input name="Wärme - Hausnummer" type="text"></div>
+        </div>
+
+        <div class="inner-grid">
+          <div class="field"><label>Verbrauch HT (kWh/Jahr)</label><input name="Wärme - Verbrauch HT kWh/Jahr" type="number" min="0" inputmode="numeric"></div>
+          <div class="field"><label>Verbrauch NT (kWh/Jahr)</label><input name="Wärme - Verbrauch NT kWh/Jahr" type="number" min="0" inputmode="numeric"></div>
+        </div>
+      </div>
+
+      <div class="field full">
+        <label for="message">Nachricht <span class="optional">(optional)</span></label>
+        <textarea id="message" name="Nachricht" placeholder=""></textarea>
+      </div>
+
+      <div class="field full upload">
+        <label for="rechnung">Aktuelle Rechnung hochladen *</label>
+        <input id="rechnung" name="Rechnung" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required>
+        <div class="form-note">PDF, JPG oder PNG. Wenn Sie technische Angaben nicht kennen, reicht die Rechnung aus.</div>
+      </div>
+
+      <div class="field full">
+        <label class="check">
+          <input type="checkbox" required>
+          <span>Ich bin damit einverstanden, dass meine Angaben und die hochgeladene Abrechnung zur Bearbeitung meiner Anfrage über einen externen Formular-Dienst (FormSubmit) übermittelt und an Bernhard Janzen weitergeleitet werden. *</span>
+        </label>
+      </div>
+
+      <div class="field full">
+        <button class="submit-btn" type="submit">Tarifcheck senden</button>
+        <div class="form-note">* Pflichtfelder. Technische Angaben sind freiwillig und können aus der Abrechnung übernommen werden.</div>
+      </div>
+    </div>
+  </form>
+</section>
+<section class="contact">
       <h2>Jetzt Tarif prüfen lassen</h2>
       <p>
         Schick mir deine aktuelle Strom- oder Gasabrechnung per WhatsApp.
@@ -262,20 +416,31 @@
     </footer>
   </main>
 
+<script>
+const visibleEmail = document.getElementById('email');
+const replyEmail = document.getElementById('replyEmail');
+const energyRadios = Array.from(document.querySelectorAll('[data-energy]'));
 
-
-
-  <script>
-    const visibleEmail = document.getElementById('email');
-    const replyEmail = document.getElementById('replyEmail');
-    if (visibleEmail && replyEmail) {
-      const syncEmail = () => { replyEmail.value = visibleEmail.value; };
-      visibleEmail.addEventListener('input', syncEmail);
-      visibleEmail.addEventListener('change', syncEmail);
-      const form = document.getElementById('energyForm');
-      if (form) form.addEventListener('submit', syncEmail);
-    }
-  </script>
+function syncEmail(){
+  if(visibleEmail && replyEmail) replyEmail.value = visibleEmail.value;
+}
+function showEnergyPanel(){
+  const selected = document.querySelector('[data-energy]:checked');
+  document.querySelectorAll('.energy-panel').forEach(p => p.classList.remove('active'));
+  if(selected){
+    const panel = document.getElementById(selected.dataset.energy + 'Panel');
+    if(panel) panel.classList.add('active');
+  }
+}
+if(visibleEmail){
+  visibleEmail.addEventListener('input', syncEmail);
+  visibleEmail.addEventListener('change', syncEmail);
+}
+energyRadios.forEach(r => r.addEventListener('change', showEnergyPanel));
+const form = document.getElementById('energyForm');
+if(form) form.addEventListener('submit', syncEmail);
+showEnergyPanel();
+</script>
 
 </body>
 </html>
